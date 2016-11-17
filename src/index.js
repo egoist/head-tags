@@ -15,7 +15,6 @@ export default function headTags({
 } = {}, {
   identifyAttribute
 } = {}) {
-
   if (!identifyAttribute) {
     throw new Error('identifyAttribute is required to make head tags query-able')
   }
@@ -104,27 +103,18 @@ export default function headTags({
 
     if (tags && tags.length > 0) {
       for (const tag of tags) {
-        const newElement = document.createElement(type)
-
-        for (const attr in tag) {
-          if (attr === 'cssText') {
-            if (newElement.styleSheet) {
-              newElement.styleSheet.cssText = tag.cssText
-            } else {
-              newElement.appendChild(document.createTextNode(tag.cssText))
-            }
-          } else if (attr === 'innerHTML') {
-            newElement.innerHTML = tag.innerHTML
-          } else {
-            newElement.setAttribute(attr, tag[attr])
-          }
-        }
+        const newElement = createNewElement(type, tag)
 
         newElement.setAttribute(identifyAttribute, '')
-        if (oldTags.some((existingTag, index) => {
+
+        /* eslint-disable no-loop-func */
+        const hasDuplicateTag = oldTags.some((existingTag, index) => {
           indexToRemove = index
           return existingTag.isEqualNode(newElement)
-        })) {
+        })
+        /* eslint-enable no-loop-func */
+
+        if (hasDuplicateTag) {
           oldTags.splice(indexToRemove, 1)
         } else {
           newTags.push(newElement)
@@ -139,4 +129,24 @@ export default function headTags({
 
 function nodesToArray(nodes) {
   return [...nodes]
+}
+
+function createNewElement(type, tag) {
+  const newElement = document.createElement(type)
+
+  for (const attr in tag) {
+    if (attr === 'cssText') {
+      if (newElement.styleSheet) {
+        newElement.styleSheet.cssText = tag.cssText
+      } else {
+        newElement.appendChild(document.createTextNode(tag.cssText))
+      }
+    } else if (attr === 'innerHTML') {
+      newElement.innerHTML = tag.innerHTML
+    } else {
+      newElement.setAttribute(attr, tag[attr])
+    }
+  }
+
+  return newElement
 }

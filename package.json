@@ -13,7 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "jest && eslint *.js",
+    "test": "jest && eslint src/*.js",
     "build": "bili --format cjs --format umd --module-name headTags --compress"
   },
   "files": [
@@ -35,6 +35,6 @@
     "jest-cli": "^15.1.1"
   },
   "eslintConfig": {
-    "extends": "egoist/esnext"
+    "extends": "egoist/esnext-browser"
   }
 }
