@@ -1,0 +1,40 @@
+{
+  "name": "head-tags",
+  "version": "0.0.0",
+  "description": "manage document head like a pro",
+  "license": "MIT",
+  "repository": "egoist/head-tags",
+  "author": {
+    "name": "EGOIST",
+    "email": "0x142857@gmail.com",
+    "url": "github.com/egoist"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "jest && eslint *.js",
+    "build": "bili --format cjs --format umd --module-name headTags --compress"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/head-tags.common.js",
+  "keywords": [
+    "document",
+    "title",
+    "tags",
+    "meta"
+  ],
+  "devDependencies": {
+    "babel-jest": "^17.0.2",
+    "babel-preset-es2015": "^6.18.0",
+    "bili": "^0.7.0",
+    "eslint": "latest",
+    "eslint-config-egoist": "latest",
+    "jest-cli": "^15.1.1"
+  },
+  "eslintConfig": {
+    "extends": "egoist/esnext"
+  }
+}
